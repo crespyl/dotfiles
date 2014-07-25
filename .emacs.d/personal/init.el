@@ -93,3 +93,6 @@ Return a list of installed packages or nil for every package not installed"
 
 ;; load custom keybindings
 (load "bindings.el")
+
+;; start server
+(server-start)
