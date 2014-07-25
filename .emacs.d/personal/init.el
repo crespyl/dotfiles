@@ -24,9 +24,10 @@ Return a list of installed packages or nil for every package not installed"
 
 ;; core toolkit packages
 (ensure-package-installed 'helm 'magit)
+(global-set-key (kbd "M-x") 'helm-M-x)
 
 ;; language modes
-(ensure-package-installed 'php-mode 'js2-mode 'less-css-mode 'twig-mode 'mustache-mode)
+(ensure-package-installed 'php-mode 'js2-mode 'less-css-mode 'twig-mode 'mustache-mode 'scala-mode2)
 
 (autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
@@ -34,6 +35,10 @@ Return a list of installed packages or nil for every package not installed"
 ;;
 ;; customization
 ;;
+
+;; colors/themes
+(require 'color-theme)
+(color-theme-initialize)
 
 ;; smart-tabs-mode
 (setq-default tab-width 6)
@@ -87,9 +92,6 @@ Return a list of installed packages or nil for every package not installed"
   (flyspell-prog-mode))
 
 (add-hook 'prelude-prog-mode-hook 'adjust-prelude-prog-mode-defaults t)
-
-;; colors/themes
-(disable-theme 'zenburn)
 
 ;; load custom keybindings
 (load "bindings.el")
