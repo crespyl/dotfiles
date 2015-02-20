@@ -1,2 +1,1 @@
-screen emacs -nw
-screen bash
+screen zsh
