@@ -15,6 +15,8 @@ source ~/bin/zsh/spectrum.zsh
 source ~/bin/zsh/prompt.zsh
 
 # Aliases
+alias dh='dirs -v'
+
 alias ls='ls -F --color=always'
 alias ll='ls -lF'
 alias la='ls -aF'
