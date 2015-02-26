@@ -119,7 +119,7 @@ prompt_char_root="%{$FX[bold]$fg[red]%}$terminator"
 
 # Fallback to basic prompt if term doesn't support fancy colors
 case "$TERM" in
-    konsole|konsole-256color|xterm-color|xterm-256color|xterm|cygwin|screen|screen-256color)
+    konsole|konsole-256color|xterm-color|xterm-256color|xterm|cygwin|screen|screen-256color|linux|screen.linux)
         export PROMPT='╭─( %{${fg[cyan]}%}%~ $(git_state)%{$fg[yellow]%}$prompt_cmd_runtime%{$reset_color%})
 ╰$prompt_userhost%(?..%{$FG[220]%}(%?%))%(!.$prompt_char_root.$prompt_char_normal)%{$reset_color%} '
         ;;
