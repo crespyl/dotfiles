@@ -1,7 +1,7 @@
 #!/usr/bin/zsh
 
 # Options
-WORDCHARS='*?[]~=/&;!#$%^(){}<>'
+WORDCHARS='*?[]~=&;!#$%^(){}<>'
 
 DIRSTACKSIZE=10
 setopt autopushd pushdminus pushdsilent pushdtohome
