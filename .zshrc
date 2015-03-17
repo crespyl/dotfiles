@@ -5,6 +5,7 @@ WORDCHARS='*?[]~=&;!#$%^(){}<>'
 
 DIRSTACKSIZE=10
 setopt autopushd pushdminus pushdsilent pushdtohome
+setopt appendhistory extendedhistory histignoredups
 
 # Prompt stuff
 autoload -U compinit && compinit
