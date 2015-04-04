@@ -1,11 +1,17 @@
 #!/usr/bin/zsh
 
 # Options
-WORDCHARS='*?[]~=&;!#$%^(){}<>'
-
-DIRSTACKSIZE=10
 setopt autopushd pushdminus pushdsilent pushdtohome
 setopt appendhistory extendedhistory histignoredups
+
+# Env
+WORDCHARS='*?[]~=&;!#$%^(){}<>'
+
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=2000
+SAVEHIST=1000
+DIRSTACKSIZE=10
+
 
 # Prompt stuff
 autoload -U compinit && compinit
