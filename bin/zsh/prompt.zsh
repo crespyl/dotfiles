@@ -118,7 +118,9 @@ prompt_char_root="%{$FX[bold]$fg[red]%}$terminator"
 [[ "$SSH_CONNECTION" != '' ]] && prompt_userhost="[ %{$usercolor%}%n%{$reset_color%}@%{$hostcolor%}%m%{$reset_color%} ]"
 
 # Fallback to basic prompt if term doesn't support fancy colors
-if [[ "$TERM" =~ .*256color.* ]] || [[ "$TERM" =~ .*(konsole|xterm).* ]]
+# I'm also assuming here that if a terminal supports 256 colors, it will probably also support the fancy
+# unicode chars
+if [[ $(tput colors) -eq 256 ]]
 then
     export PROMPT='╭─( %{${fg[cyan]}%}%~ $(git_state)%{$fg[yellow]%}$prompt_cmd_runtime%{$reset_color%})
 ╰$prompt_userhost%(?..%{$FG[220]%}(%?%))%(!.$prompt_char_root.$prompt_char_normal)%{$reset_color%} '
