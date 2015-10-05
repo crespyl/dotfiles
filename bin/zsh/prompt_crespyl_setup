@@ -33,7 +33,7 @@ prompt_crespyl_git_status() {
 		
 		branch=${PROMPT_CRESPYL_VCS_BRANCH_COLOR}${branch}${reset_color}
 
-		if [[ $git_status =~ '\nM ' || $git_status =~ '\nA ' || $git_status =~ '^A ' ]]; then
+		if [[ $git_status =~ 'M  ' || $git_status =~ 'A  ' || $git_status =~ 'D  ' ]]; then
 			dots=${dots}${PROMPT_CRESPYL_VCS_STAGED_COLOR}$PROMPT_CRESPYL_VCS_CHAR${reset_color}
 		fi
 		if [[ $git_status =~ ' M ' || $git_status =~ ' D ' ]]; then
