@@ -1,0 +1,173 @@
+# crespyl prompt theme
+
+prompt_crespyl_help() {
+}
+
+# See spectrum.zsh
+# A script to make using 256 colors in zsh less painful.
+# P.C. Shyamshankar <sykora@lucentbeing.com>
+# Copied from http://github.com/sykora/etc/blob/master/zsh/functions/spectrum/
+prompt_crespyl_spectrum_colors() {
+	typeset -Ag FX FG BG
+	FX=(
+		reset     "[00m"
+		bold      "[01m" no-bold      "[22m"
+		italic    "[03m" no-italic    "[23m"
+		underline "[04m" no-underline "[24m"
+		blink     "[05m" no-blink     "[25m"
+		reverse   "[07m" no-reverse   "[27m"
+	)
+	for color in {000..255}; do
+		FG[$color]="[38;5;${color}m"
+		BG[$color]="[48;5;${color}m"
+	done
+}
+
+# basic git status information, branch and staged, modified, or untracked files
+prompt_crespyl_git_status() {
+	branch=$(git status >/dev/null 2>&1 && git symbolic-ref --short HEAD 2>/dev/null)
+	if [[ -n $branch ]]
+	then
+		git_status=$(git status -s 2>/dev/null)
+		dots=''
+		
+		branch=${PROMPT_CRESPYL_VCS_BRANCH_COLOR}${branch}${reset_color}
+
+		if [[ $git_status =~ '\nM ' || $git_status =~ '\nA ' || $git_status =~ '^A ' ]]; then
+			dots=${dots}${PROMPT_CRESPYL_VCS_STAGED_COLOR}$PROMPT_CRESPYL_VCS_CHAR${reset_color}
+		fi
+		if [[ $git_status =~ ' M ' || $git_status =~ ' D ' ]]; then
+			dots=${dots}${PROMPT_CRESPYL_VCS_MODIFIED_COLOR}$PROMPT_CRESPYL_VCS_CHAR${reset_color}
+		fi
+		if [[ $git_status =~ '\?\? ' ]]; then
+			dots=${dots}${PROMPT_CRESPYL_VCS_UNTRACKED_COLOR}${PROMPT_CRESPYL_VCS_CHAR}${reset_color}
+		fi
+
+		if [[ -z $dots ]]; then
+			result="$branch"
+		else
+			result="$branch:$dots"
+		fi
+
+		echo -ne "$result "
+	fi
+}
+
+# format n seconds into XdXhXmXs
+# copied from Pure zsh prompt, https://github.com/sindresorhus/pure
+prompt_crespyl_human_time() {
+	local tmp=$1
+    local days=$(( tmp / 60 / 60 / 24 ))
+    local hours=$(( tmp / 60 / 60 % 24 ))
+    local minutes=$(( tmp / 60 % 60 ))
+    local seconds=$(( tmp % 60 ))
+    (( $days > 0 )) && echo -n "${days}d "
+    (( $hours > 0 )) && echo -n "${hours}h "
+    (( $minutes > 0 )) && echo -n "${minutes}m "
+    echo "${seconds}s "
+}
+
+# preexec hook, store the date (in seconds) command execution begins
+prompt_crespyl_preexec() {
+	prompt_crespyl_cmd_timestamp=$(date +%s)
+}
+
+# precmd hook, set variables before each printing of the prompt
+prompt_crespyl_precmd() {
+	# if the last command took more than 5 seconds, display the elapsed time
+	if [[ -n "$prompt_crespyl_cmd_timestamp" ]]; then
+		local stop=$(date +%s)
+		local start=${prompt_crespyl_cmd_timestamp:-$stop};
+		local elapsed=$stop-$start;
+		if [[ $elapsed -gt 5 ]]; then
+			prompt_crespyl_cmd_runtime=$(prompt_crespyl_human_time $elapsed)
+		else
+			prompt_crespyl_cmd_runtime=''
+		fi
+	fi
+}
+
+prompt_crespyl_setup() {
+	autoload -U colors && colors
+	
+	# set zsh hooks
+	autoload -U add-zsh-hook
+	add-zsh-hook preexec prompt_crespyl_preexec
+	add-zsh-hook precmd prompt_crespyl_precmd
+
+	# if the terminal supports 256 colors, enable some extra pretties, if not
+	# assume that we probably don't have unicode support either
+	if [[ $(echotc Co) -ge 256 ]]
+	then
+		prompt_crespyl_spectrum_colors;
+
+		# unicode BLACK CIRCLE, 25CF, used for the VCS "traffic lights"
+		PROMPT_CRESPYL_VCS_CHAR="●"
+
+		# unicode HEAVY RIGHT-POINTING ANGLE QUOTATION MARK ORNAMENT, 276F
+		# used for prompt terminator (I find it a little nicer than >)
+		PROMPT_CRESPYL_TERMINATOR_CHAR_NORMAL="❯"
+		PROMPT_CRESPYL_TERMINATOR_CHAR_ROOT="#"
+
+		# unicode BOX DRAWINGS LIGHT ARC DOWN AND RIGHT, 256D, with
+		# BOX DRAWINGS LIGHT HORIZONTAL, 2500, and
+		# BOX DRAWINGS LIGHT ARC UP AND RIGHT, 2570
+		PROMPT_CRESPYL_UL_CORNER="╭─"
+		PROMPT_CRESPYL_BL_CORNER="╰"
+
+		# colors
+		PROMPT_CRESPYL_TERMINATOR_COLOR_NORMAL="$FG[082]"
+		PROMPT_CRESPYL_TERMINATOR_COLOR_ERROR="$FG[125]"
+		PROMPT_CRESPYL_TERMINATOR_COLOR_ROOT="$FG[196]"
+		PROMPT_CRESPYL_TIMER_COLOR="$FG[227]"
+		PROMPT_CRESPYL_ERROR_CODE_COLOR="$FG[220]"
+		PROMPT_CRESPYL_VCS_BRANCH_COLOR="$FG[110]"
+		PROMPT_CRESPYL_VCS_MODIFIED_COLOR="$fg_bold[red]"
+		PROMPT_CRESPYL_VCS_STAGED_COLOR="$fg_bold[green]"
+		PROMPT_CRESPYL_VCS_UNTRACKED_COLOR="$fg_bold[yellow]"
+	else
+		PROMPT_CRESPYL_VCS_CHAR="*"
+
+		# use basic ascii line drawing glyphs
+		PROMPT_CRESPYL_UL_CORNER="┌─"
+		PROMPT_CRESPYL_BL_CORNER="└"
+
+		PROMPT_CRESPYL_TERMINATOR_CHAR_NORMAL="$fg[green]>$reset_color"
+		PROMPT_CRESPYL_TERMINATOR_CHAR_ROOT="$fg[red]#$reset_color"
+
+		# colors
+		PROMPT_CRESPYL_TERMINATOR_COLOR_NORMAL="$fg_bold[green]"
+		PROMPT_CRESPYL_TERMINATOR_COLOR_ERROR="$fg_no_bold[yellow]"
+		PROMPT_CRESPYL_TERMINATOR_COLOR_ROOT="$fg_bold[red]"
+		PROMPT_CRESPYL_TIMER_COLOR="$fg_no_bold[yellow]"
+		PROMPT_CRESPYL_ERROR_CODE_COLOR="$fg_no_bold[yellow]"
+		PROMPT_CRESPYL_VCS_BRANCH_COLOR="$fg_no_bold[cyan]"
+		PROMPT_CRESPYL_VCS_MODIFIED_COLOR="$fg_bold[red]"
+		PROMPT_CRESPYL_VCS_STAGED_COLOR="$fg_bold[green]"
+		PROMPT_CRESPYL_VCS_UNTRACKED_COLOR="$fg_bold[yellow]"
+	fi
+
+	# only show user@host if logged in over ssh
+	if [[ $SSH_CONNECTION != '' ]]; then
+		PROMPT_CRESPYL_USERHOST="[ %(!.%{$fg_bold[red]%}.%{$fg_no_bold[green]%})%n%{$reset_color%}"
+		PROMPT_CRESPYL_USERHOST="${PROMPT_CRESPYL_USERHOST}@%{$fg_no_bold[yellow]%}%m%{$reset_color%} ]"
+	fi
+
+	# top half
+	PROMPT='$PROMPT_CRESPYL_UL_CORNER'
+	PROMPT=${PROMPT}'( %{$fg[cyan]%}%~%{$reset_color%} $(prompt_crespyl_git_status)'
+	PROMPT=${PROMPT}'%{$PROMPT_CRESPYL_TIMER_COLOR%}$prompt_crespyl_cmd_runtime%{$reset_color%}'
+	PROMPT=${PROMPT}')'
+	# Newline, corner
+	PROMPT=${PROMPT}'
+${PROMPT_CRESPYL_BL_CORNER}'
+	# bottom half
+	PROMPT=${PROMPT}'$PROMPT_CRESPYL_USERHOST'
+	PROMPT=${PROMPT}'%(?..%{$PROMPT_CRESPYL_ERROR_CODE_COLOR%}(%?%))'
+	PROMPT=${PROMPT}'%(?.%{$PROMPT_CRESPYL_TERMINATOR_COLOR_NORMAL%}.%{$PROMPT_CRESPYL_TERMINATOR_COLOR_ERROR%})'
+	PROMPT=${PROMPT}'%(!.%{$PROMPT_CRESPYL_TERMINATOR_COLOR_ROOT%}.)'
+	PROMPT=${PROMPT}'%(!.%{$PROMPT_CRESPYL_TERMINATOR_CHAR_ROOT%}.%{$PROMPT_CRESPYL_TERMINATOR_CHAR_NORMAL%})'
+	PROMPT=${PROMPT}'%1{$reset_color%} '
+}
+
+prompt_crespyl_setup
