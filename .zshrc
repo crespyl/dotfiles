@@ -11,8 +11,8 @@
 #
 
 # Set EDITOR, VISUAL, and BROWSER
-EDITOR='nano'
-VISUAL='nano'
+EDITOR='emacsclient --create-frame --tty --alternate-editor=nano '
+VISUAL='emacsclient --create-frame --tty --alternate-editor=nano '
 BROWSER='elinks'
 
 #
