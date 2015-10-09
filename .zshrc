@@ -73,4 +73,10 @@ fi
 # add ~/bin/zsh/ to fpath, enable prompt theme feature
 fpath=(~/bin/zsh $fpath)
 autoload -U promptinit && promptinit
-prompt crespyl
+prompt crespyl clock
+
+# enable prompt auto-refresh, for the clock
+TMOUT=1
+TRAPALRM() {
+	zle && zle reset-prompt
+}
