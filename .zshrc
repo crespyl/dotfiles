@@ -15,6 +15,9 @@ EDITOR='nano'
 VISUAL='nano'
 BROWSER='elinks'
 
+# Set PATH to include ~/bin/
+PATH=$PATH:~/bin
+
 #
 # Configure ZSH specific options
 #
