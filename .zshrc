@@ -11,9 +11,9 @@
 #
 
 # Set EDITOR, VISUAL, and BROWSER
-EDITOR='nano'
-VISUAL='nano'
-BROWSER='elinks'
+EDITOR=~/bin/editor.sh
+VISUAL=~/bin/editor.sh
+BROWSER=elinks
 
 # Set PATH to include ~/bin/
 PATH=$PATH:~/bin
@@ -73,7 +73,7 @@ fi
 # add ~/bin/zsh/ to fpath, enable prompt theme feature
 fpath=(~/bin/zsh $fpath)
 autoload -U promptinit && promptinit
-prompt crespyl clock
+prompt crespyl
 
 # enable prompt auto-refresh, for the clock
 TMOUT=1
