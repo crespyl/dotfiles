@@ -7,6 +7,11 @@ prompt_crespyl_help() {
 # A script to make using 256 colors in zsh less painful.
 # P.C. Shyamshankar <sykora@lucentbeing.com>
 # Copied from http://github.com/sykora/etc/blob/master/zsh/functions/spectrum/
+# - Note that this works for most xterm style displays, but fbterm uses a
+# different set of escape sequences:
+#  ESC [ 1 ; n }              set foreground
+#  ESC [ 2 ; n }              set background
+#  ESC [ 3 ; n ; r ; g ; b }  set color n to (r,g,b) (n,r,g,b all in (0-255))
 prompt_crespyl_spectrum_colors() {
 	typeset -Ag FX FG BG
 	FX=(
@@ -17,10 +22,20 @@ prompt_crespyl_spectrum_colors() {
 		blink     "[05m" no-blink     "[25m"
 		reverse   "[07m" no-reverse   "[27m"
 	)
-	for color in {000..255}; do
-		FG[$color]="[38;5;${color}m"
-		BG[$color]="[48;5;${color}m"
-	done
+
+	if [[ $TERM == "fbterm" ]]
+	then
+	    # fbterm support
+	    for color in {000..255}; do
+		  FG[$color]="%{[1;${color}}%}"
+		  BG[$color]="%{[2;${color}}%}"
+	    done
+	else
+	    for color in {000..255}; do
+		  FG[$color]="%{[38;5;${color}m%}"
+		  BG[$color]="%{[48;5;${color}m%}"
+	    done	    
+	fi
 }
 
 # basic git status information, branch and staged, modified, or untracked files

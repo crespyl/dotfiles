@@ -14,3 +14,6 @@ set -g mouse-resize-pane on
 
 # Bind <prefix> u to urlscan
 bind-key u capture-pane\; save-buffer /tmp/tmux-buffer \; new-window -n "urlscan" '$SHELL -c "urlscan < /tmp/tmux-buffer"'
+
+# Bind <prefix> p to fpp
+bind f run "sh -s fpp #{pane_id}"

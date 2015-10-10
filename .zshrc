@@ -11,9 +11,9 @@
 #
 
 # Set EDITOR, VISUAL, and BROWSER
-EDITOR='emacsclient --create-frame --tty --alternate-editor=nano '
-VISUAL='emacsclient --create-frame --tty --alternate-editor=nano '
-BROWSER='elinks'
+EDITOR=~/bin/editor.sh
+VISUAL=~/bin/editor.sh
+BROWSER='w3m'
 
 #
 # Configure ZSH specific options
@@ -30,14 +30,21 @@ WORDCHARS='*?[]~=&;!#$%^(){}<>'
 # history stack
 DIRSTACKSIZE=10
 
+# If FBTERM is defined, set the terminal type to fbterm
+if [[ -n $FBTERM ]] then
+   TERM=fbterm
+fi
+
 #
 # Command Aliases
 #
 
+alias e='$EDITOR '
 alias dh='dirs -v'
 alias ls='ls -F --color=always'
 alias ll='ls -lF --color=always'
 alias la='ls -aF --color=always'
+alias fbt='TERM=fbterm ~/bin/fbterm-bi ~/.tty-wallpaper'
 
 # this makes less pass through color escape codes
 alias less='less -R'
@@ -65,6 +72,18 @@ setopt prompt_percent
 if [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]
 then
 	source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+# use k, if present (https://github.com/rimraf/k)
+if [[ -f ~/bin/zsh/k.sh ]]
+then
+    source ~/bin/zsh/k.sh
+fi
+
+# if .dircolors is present, read that to define colors used by ls
+if [[ -f ~/.dircolors ]]
+then
+	source ~/.dircolors
 fi
 
 # add ~/bin/zsh/ to fpath, enable prompt theme feature
