@@ -47,7 +47,7 @@ alias dh='dirs -v'
 alias ls='ls -F --color=always'
 alias ll='ls -lF --color=always'
 alias la='ls -aF --color=always'
-alias fbt='TERM=fbterm ~/bin/fbterm-bi ~/.tty-wallpaper'
+alias fbt='FBTERM=1 ~/bin/fbterm-bi ~/.tty-wallpaper'
 
 # this makes less pass through color escape codes
 alias less='less -R'
