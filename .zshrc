@@ -13,7 +13,10 @@
 # Set EDITOR, VISUAL, and BROWSER
 EDITOR=~/bin/editor.sh
 VISUAL=~/bin/editor.sh
-BROWSER='w3m'
+BROWSER=elinks
+
+# Set PATH to include ~/bin/
+PATH=$PATH:~/bin
 
 #
 # Configure ZSH specific options
@@ -90,3 +93,9 @@ fi
 fpath=(~/bin/zsh $fpath)
 autoload -U promptinit && promptinit
 prompt crespyl
+
+# enable prompt auto-refresh, for the clock
+TMOUT=1
+TRAPALRM() {
+	zle && zle reset-prompt
+}

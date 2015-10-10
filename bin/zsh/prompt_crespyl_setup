@@ -1,6 +1,12 @@
 # crespyl prompt theme
 
 prompt_crespyl_help() {
+	cat <<EOF
+A reasonably nice prompt, with 256color support in both xterm and fbterm
+
+Supports a clock in RPROMPT, disabled by passing 'noclock' as the
+first argument.
+EOF
 }
 
 # See spectrum.zsh
@@ -183,6 +189,14 @@ ${PROMPT_CRESPYL_BL_CORNER}'
 	PROMPT=${PROMPT}'%(!.%{$PROMPT_CRESPYL_TERMINATOR_COLOR_ROOT%}.)'
 	PROMPT=${PROMPT}'%(!.%{$PROMPT_CRESPYL_TERMINATOR_CHAR_ROOT%}.%{$PROMPT_CRESPYL_TERMINATOR_CHAR_NORMAL%})'
 	PROMPT=${PROMPT}'%1{$reset_color%} '
+
+	# add updating clock in RPROMPT
+	if [[ "$1" != "noclock" ]]; then
+		LARROW="" # uE0B2
+		RPROMPT="%{$fg[white]%}$LARROW%{$fg_no_bold[black]$bg[white]%}%D{%L:%M:%S %p} %{$reset_color%}"
+	else
+		RPROMPT=''
+	fi
 }
 
 prompt_crespyl_setup
