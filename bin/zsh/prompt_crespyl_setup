@@ -46,9 +46,12 @@ prompt_crespyl_spectrum_colors() {
 
 # basic git status information, branch and staged, modified, or untracked files
 prompt_crespyl_git_status() {
+	local branch='';
+	local dots='';
 	branch=$(git status >/dev/null 2>&1 && git symbolic-ref --short HEAD 2>/dev/null)
 	if [[ -n $branch ]]
 	then
+		local git_status=''
 		git_status=$(git status -s 2>/dev/null)
 		dots=''
 		
@@ -109,6 +112,8 @@ prompt_crespyl_precmd() {
 }
 
 prompt_crespyl_setup() {
+	setopt local_options typeset_silent
+	
 	autoload -U colors && colors
 	
 	# set zsh hooks

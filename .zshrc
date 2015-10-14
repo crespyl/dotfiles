@@ -89,6 +89,12 @@ then
 	source ~/.dircolors
 fi
 
+# if using tmux, check for 256color support and set terminal type
+if [[ -n $TMUX && `tmux show-environment -g TERM` =~ "256color" ]]
+then
+	export TERM=screen-256color
+fi
+
 # add ~/bin/zsh/ to fpath, enable prompt theme feature
 fpath=(~/bin/zsh $fpath)
 autoload -U promptinit && promptinit
