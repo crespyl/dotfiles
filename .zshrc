@@ -71,7 +71,7 @@ then
 fi
 
 # if using tmux, check for 256color support and set terminal type
-if [[ -n $TMUX && `tmux show-environment TERM` =~ "256color" ]]
+if [[ -n $TMUX && `tmux show-environment -g TERM` =~ "256color" ]]
 then
 	export TERM=screen-256color
 fi
