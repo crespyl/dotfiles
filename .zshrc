@@ -22,15 +22,22 @@ PATH=$PATH:~/bin
 # Configure ZSH specific options
 #
 
-# WORDCHARS defines which special characters are treated
-# as part of a word for ZLE navigation purposes.
-# The default setting happens to include '/' which bothers
-# me
+# History, save in HISTFILE and keep SAVEHIST lines, reading HISTSIZE lines at
+# interactive shell startup.
+# Additionally, don't save repeated commands, prefer to remove duplicates, and
+# trim whitespace that doesn't mean anything to the shell.
+HISTFILE=~/.zsh_history
+HISTSIZE=1000
+SAVEHIST=1000
+setopt hist_ignoredups hist_expire_dups_first hist_reduce_blanks
+
+# WORDCHARS defines which special characters are treated as part of a word for
+# ZLE navigation purposes. The default setting happens to include '/' which
+# bothers me
 WORDCHARS='*?[]~=&;!#$%^(){}<>'
 
-# DIRSTACKSIZE is used in conjunction with ZSH's pushd
-# features, and controls the maximum size of the directory
-# history stack
+# DIRSTACKSIZE is used in conjunction with ZSH's pushd features, and controls
+# the maximum size of the directory history stack
 DIRSTACKSIZE=10
 
 # If FBTERM is defined, set the terminal type to fbterm

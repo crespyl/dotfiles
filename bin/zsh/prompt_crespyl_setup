@@ -67,6 +67,7 @@ prompt_crespyl_git_status() {
 			dots=${dots}${PROMPT_CRESPYL_VCS_UNTRACKED_COLOR}${PROMPT_CRESPYL_VCS_CHAR}${reset_color}
 		fi
 
+		local result='';
 		if [[ -z $dots ]]; then
 			result="$branch"
 		else
@@ -204,4 +205,4 @@ ${PROMPT_CRESPYL_BL_CORNER}'
 	fi
 }
 
-prompt_crespyl_setup
+prompt_crespyl_setup "$@"
