@@ -40,7 +40,7 @@ prompt_crespyl_spectrum_colors() {
 	    for color in {000..255}; do
 		  FG[$color]="%{[38;5;${color}m%}"
 		  BG[$color]="%{[48;5;${color}m%}"
-	    done	    
+	    done
 	fi
 }
 
@@ -54,7 +54,7 @@ prompt_crespyl_git_status() {
 		local git_status=''
 		git_status=$(git status -s 2>/dev/null)
 		dots=''
-		
+
 		branch=${PROMPT_CRESPYL_VCS_BRANCH_COLOR}${branch}${reset_color}
 
 		if [[ $git_status =~ 'M  ' || $git_status =~ 'A  ' || $git_status =~ 'D  ' ]]; then
@@ -114,9 +114,9 @@ prompt_crespyl_precmd() {
 
 prompt_crespyl_setup() {
 	setopt local_options typeset_silent
-	
+
 	autoload -U colors && colors
-	
+
 	# set zsh hooks
 	autoload -U add-zsh-hook
 	add-zsh-hook preexec prompt_crespyl_preexec
