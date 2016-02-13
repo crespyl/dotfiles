@@ -109,6 +109,7 @@ prompt_crespyl_precmd() {
 		else
 			prompt_crespyl_cmd_runtime=''
 		fi
+		prompt_crespyl_cmd_timestamp=''
 	fi
 }
 
