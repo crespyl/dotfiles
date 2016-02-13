@@ -1,0 +1,29 @@
+############################
+## Mouse (Logitech MX518) ##
+############################
+
+# Present (Ctrl+F9)
+"Logitech USB-PS/2 Optical Mouse" "/dev/input/by-id/usb-Logitech_USB-PS_2_Optical_Mouse-event-mouse" none key/277 "XKey/Control_L+F9"
+
+###################################################
+## Keyboard (MS Natural Ergonomic Keyboard 4000) ##
+###################################################
+
+# Zoom +
+"Microsoft Natural® Ergonomic Keyboard 4000" "/dev/input/by-id/usb-Microsoft_Natural®_Ergonomic_Keyboard_4000-if01-event-kbd" none key/418 "XKey/XF86ZoomIn"
+
+# Zoom -
+"Microsoft Natural® Ergonomic Keyboard 4000" "/dev/input/by-id/usb-Microsoft_Natural®_Ergonomic_Keyboard_4000-if01-event-kbd" none key/419 "XKey/XF86ZoomOut"
+
+#############################
+## Headset (Logitech G930) ##
+#############################
+
+# G-Keys; Next, Play/Pause, Previous
+"Logitech Logitech G930 Headset" "/dev/input/by-id/usb-Logitech_Logitech_G930_Headset-event-if03" none key/260 "XKey/XF86AudioNext"
+"Logitech Logitech G930 Headset" "/dev/input/by-id/usb-Logitech_Logitech_G930_Headset-event-if03" none key/261 "XKey/XF86AudioPlay"
+"Logitech Logitech G930 Headset" "/dev/input/by-id/usb-Logitech_Logitech_G930_Headset-event-if03" none key/262 "XKey/XF86AudioPrev"
+
+# Wheel; Volume Up/Down
+"Logitech Logitech G930 Headset" "/dev/input/by-id/usb-Logitech_Logitech_G930_Headset-event-if03" none key/256 "XKey/XF86AudioRaiseVolume"
+"Logitech Logitech G930 Headset" "/dev/input/by-id/usb-Logitech_Logitech_G930_Headset-event-if03" none key/257 "XKey/XF86AudioLowerVolume"
